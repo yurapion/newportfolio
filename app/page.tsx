@@ -4,6 +4,8 @@ import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
+import { ProjectModal } from "@/components/project-modal"
+import { getFeaturedProjects, ProjectData } from "@/data/projects"
 import {
   Code2,
   Database,
@@ -19,6 +21,9 @@ import {
   Award,
   Target,
   Zap,
+  Brain,
+  Shield,
+  ExternalLink,
 } from "lucide-react"
 
 // Animated Counter Component
@@ -76,6 +81,16 @@ function useScrollAnimation() {
 export default function CVWebsite() {
   useScrollAnimation()
 
+  const [selectedProject, setSelectedProject] = useState<ProjectData | null>(null)
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  
+  const featuredProjects = getFeaturedProjects()
+
+  const handleProjectClick = (project: ProjectData) => {
+    setSelectedProject(project)
+    setIsModalOpen(true)
+  }
+
   const skills = {
     backend: [
       "C#/.NET 8",
@@ -102,32 +117,33 @@ export default function CVWebsite() {
     ],
   }
 
-  const projects = [
-    {
-      title: "AI-Sight Medical Imaging Platform",
-      description: "Architected AI-powered platform with batch image upload, increasing response efficiency by 30%",
-      impact: "Processing thousands of images daily",
-      tech: ["C#/.NET", "React", "AI/ML", "Azure"],
-    },
-    {
-      title: "InCare Patient Management System",
-      description: "Built comprehensive EHR system with patient workflow automation",
-      impact: "Managing 100,000+ patients across multiple clinics",
-      tech: ["Flutter", "PostgreSQL", "FHIR", "HIPAA"],
-    },
-    {
-      title: "AccentPOS System",
-      description: "Engineered complete POS solution with real-time synchronization",
-      impact: "Handling $5M+ in monthly transactions",
-      tech: ["React", "AWS", "PayPal", "Stripe"],
-    },
-    {
-      title: "Infrastructure & DevOps",
-      description: "Designed AWS infrastructure using Terraform for 15+ applications",
-      impact: "99.9% uptime, 40% faster deployments",
-      tech: ["AWS", "Terraform", "Docker", "CI/CD"],
-    },
-  ]
+  const getProjectIcon = (type: ProjectData["type"]) => {
+    switch (type) {
+      case "ai":
+        return Brain
+      case "mobile":
+        return Smartphone
+      case "infrastructure":
+        return Cloud
+      case "web":
+        return Code2
+      default:
+        return Settings
+    }
+  }
+
+  const getIndustryColor = (industry: string) => {
+    switch (industry.toLowerCase()) {
+      case "healthcare":
+        return "text-green-600"
+      case "enterprise":
+        return "text-blue-600"
+      case "e-commerce":
+        return "text-purple-600"
+      default:
+        return "text-slate-600"
+    }
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
@@ -340,30 +356,63 @@ export default function CVWebsite() {
           </div>
 
           <div className="grid md:grid-cols-2 gap-8">
-            {projects.map((project, index) => (
-              <Card
-                key={index}
-                className="scroll-animate hover:shadow-xl transition-all duration-300 hover:-translate-y-2 group"
-              >
-                <CardContent className="p-8">
-                  <h3 className="text-2xl font-bold text-slate-900 mb-4 group-hover:text-blue-600 transition-colors">
-                    {project.title}
-                  </h3>
-                  <p className="text-slate-600 mb-4 leading-relaxed">{project.description}</p>
-                  <div className="flex items-center text-green-600 font-semibold mb-4">
-                    <TrendingUp className="h-5 w-5 mr-2" />
-                    {project.impact}
-                  </div>
-                  <div className="flex flex-wrap gap-2">
-                    {project.tech.map((tech) => (
-                      <Badge key={tech} className="bg-blue-100 text-blue-800 hover:bg-blue-200 transition-colors">
-                        {tech}
+            {featuredProjects.map((project) => {
+              const ProjectIcon = getProjectIcon(project.type)
+              const industryColor = getIndustryColor(project.industry)
+              
+              return (
+                <Card
+                  key={project.id}
+                  className="scroll-animate hover:shadow-xl transition-all duration-300 hover:-translate-y-2 group cursor-pointer"
+                  onClick={() => handleProjectClick(project)}
+                >
+                  <CardContent className="p-8">
+                    <div className="flex items-start justify-between mb-4">
+                      <div className="flex items-center gap-3">
+                        <div className="p-2 bg-blue-100 rounded-lg">
+                          <ProjectIcon className="h-6 w-6 text-blue-600" />
+                        </div>
+                        <div>
+                          <h3 className="text-2xl font-bold text-slate-900 group-hover:text-blue-600 transition-colors">
+                            {project.title}
+                          </h3>
+                          <div className="flex items-center gap-2 mt-1">
+                            <span className={`text-sm font-medium ${industryColor}`}>{project.company}</span>
+                            <span className="text-sm text-slate-500">• {project.duration}</span>
+                          </div>
+                        </div>
+                      </div>
+                      <ExternalLink className="h-5 w-5 text-slate-400 group-hover:text-blue-600 transition-colors" />
+                    </div>
+                    
+                    <p className="text-slate-600 mb-4 leading-relaxed line-clamp-3">{project.description}</p>
+                    
+                    <div className="space-y-3 mb-4">
+                      <div className="flex items-center text-green-600 font-semibold">
+                        <TrendingUp className="h-5 w-5 mr-2" />
+                        <span className="text-sm">{project.impact[0]}</span>
+                      </div>
+                      <Badge variant="outline" className="w-fit text-xs">
+                        {project.role}
                       </Badge>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+                    </div>
+                    
+                    <div className="flex flex-wrap gap-2">
+                      {project.technologies.slice(0, 4).map((tech) => (
+                        <Badge key={tech} className="bg-blue-100 text-blue-800 hover:bg-blue-200 transition-colors text-xs">
+                          {tech}
+                        </Badge>
+                      ))}
+                      {project.technologies.length > 4 && (
+                        <Badge variant="outline" className="text-xs">
+                          +{project.technologies.length - 4} more
+                        </Badge>
+                      )}
+                    </div>
+                  </CardContent>
+                </Card>
+              )
+            })}
           </div>
         </div>
       </section>
@@ -460,6 +509,13 @@ export default function CVWebsite() {
       <footer className="py-8 bg-slate-950 text-slate-400 text-center px-4">
         <p>&copy; {new Date().getFullYear()} Senior Full-Stack Developer & Technical Lead. All rights reserved.</p>
       </footer>
+
+      {/* Project Modal */}
+      <ProjectModal 
+        project={selectedProject}
+        isOpen={isModalOpen}
+        onOpenChange={setIsModalOpen}
+      />
     </div>
   )
 }
