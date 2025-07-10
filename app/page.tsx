@@ -35,7 +35,105 @@ import {
   Clock,
   Building,
   Briefcase,
+  Globe,
+  Menu,
+  X,
 } from "lucide-react"
+
+// Navigation Component
+function Navigation() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+
+  const navItems = [
+    { label: "Home", href: "#home" },
+    { label: "About", href: "#about" },
+    { label: "Skills", href: "#skills" },
+    { label: "Experience", href: "#experience" },
+    { label: "Projects", href: "#projects" },
+    { label: "Testimonials", href: "#testimonials" },
+    { label: "Services", href: "#services" },
+    { label: "Contact", href: "#contact" },
+  ]
+
+  const scrollToSection = (href: string) => {
+    const element = document.querySelector(href)
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }
+    setIsMenuOpen(false)
+  }
+
+  return (
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-slate-200 shadow-sm">
+      <div className="max-w-7xl mx-auto px-4">
+        <div className="flex items-center justify-between h-16">
+          {/* Logo */}
+          <div className="flex items-center">
+            <button 
+              onClick={() => scrollToSection('#home')}
+              className="text-xl font-bold text-slate-900 hover:text-blue-600 transition-colors"
+            >
+              Senior Developer
+            </button>
+          </div>
+
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center space-x-8">
+            {navItems.map((item) => (
+              <button
+                key={item.label}
+                onClick={() => scrollToSection(item.href)}
+                className="text-slate-600 hover:text-blue-600 font-medium transition-colors duration-200 hover:scale-105"
+              >
+                {item.label}
+              </button>
+            ))}
+            <Button
+              size="sm"
+              className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 transition-all duration-300 hover:scale-105"
+              onClick={() => window.location.href = '/architecture'}
+            >
+              Architecture
+            </Button>
+          </div>
+
+          {/* Mobile menu button */}
+          <div className="md:hidden">
+            <button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="text-slate-600 hover:text-blue-600 transition-colors"
+            >
+              {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            </button>
+          </div>
+        </div>
+
+        {/* Mobile Navigation */}
+        {isMenuOpen && (
+          <div className="md:hidden">
+            <div className="px-2 pt-2 pb-3 space-y-1 bg-white border-t border-slate-200">
+              {navItems.map((item) => (
+                <button
+                  key={item.label}
+                  onClick={() => scrollToSection(item.href)}
+                  className="block w-full text-left px-3 py-2 text-slate-600 hover:text-blue-600 hover:bg-blue-50 rounded-md transition-colors"
+                >
+                  {item.label}
+                </button>
+              ))}
+              <button
+                onClick={() => window.location.href = '/architecture'}
+                className="block w-full text-left px-3 py-2 text-blue-600 font-semibold hover:bg-blue-50 rounded-md transition-colors"
+              >
+                System Architecture
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
+    </nav>
+  )
+}
 
 // Animated Counter Component
 function AnimatedCounter({ end, duration = 2000, suffix = "" }: { end: number; duration?: number; suffix?: string }) {
@@ -163,8 +261,11 @@ export default function CVWebsite() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+      {/* Navigation */}
+      <Navigation />
+
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center px-4 overflow-hidden">
+      <section id="home" className="relative min-h-screen flex items-center justify-center px-4 overflow-hidden pt-16">
         <div className="absolute inset-0 bg-gradient-to-br from-blue-900/5 to-slate-900/5"></div>
         <div className="relative z-10 text-center max-w-4xl mx-auto">
           <div className="animate-fade-in-down">
@@ -249,36 +350,212 @@ export default function CVWebsite() {
       </section>
 
       {/* About Section */}
-      <section className="py-20 px-4">
+      <section id="about" className="py-20 bg-gradient-to-br from-slate-50 to-blue-50 px-4">
         <div className="max-w-6xl mx-auto">
           <div className="scroll-animate text-center mb-16">
-            <h2 className="text-4xl font-bold text-slate-900 mb-6">Professional Summary</h2>
-            <div className="max-w-4xl mx-auto">
-              {currentPosition && (
-                <div className="mb-6">
-                  <Badge className="bg-blue-100 text-blue-800 px-4 py-2 text-sm font-medium">
-                    Currently: {currentPosition.position} at {currentPosition.company}
-                  </Badge>
+            <h2 className="text-4xl font-bold text-slate-900 mb-6">About Me</h2>
+            <p className="text-lg text-slate-600">The story behind the code</p>
+          </div>
+
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            {/* Personal Story */}
+            <div className="scroll-animate">
+              <h3 className="text-2xl font-bold text-slate-900 mb-6">My Journey in Technology</h3>
+              <div className="space-y-4 text-slate-600 leading-relaxed">
+                <p>
+                  My passion for technology began with solving complex problems and creating solutions that make a real difference. 
+                  Over {totalYears}+ years, I've evolved from a curious developer into a technical leader who bridges the gap 
+                  between innovative technology and business value.
+                </p>
+                <p>
+                  What drives me most is working on meaningful projects—especially in healthcare where technology can literally 
+                  save lives. From building AI-powered medical imaging platforms that help diagnose diabetic retinopathy to 
+                  creating communication tools that serve 100,000+ patients, I'm motivated by impact.
+                </p>
+                <p>
+                  I believe the best technology solutions come from understanding both the technical complexities and human needs. 
+                  That's why I focus not just on writing clean, scalable code, but on mentoring teams, understanding business 
+                  objectives, and delivering solutions that truly solve problems.
+                </p>
+              </div>
+            </div>
+
+            {/* Core Values & Work Style */}
+            <div className="scroll-animate">
+              <h3 className="text-2xl font-bold text-slate-900 mb-6">My Values & Work Philosophy</h3>
+              <div className="space-y-6">
+                <div className="flex items-start gap-4">
+                  <div className="p-2 bg-blue-100 rounded-lg">
+                    <Target className="h-6 w-6 text-blue-600" />
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-slate-900 mb-2">Impact-Driven Development</h4>
+                    <p className="text-sm text-slate-600">Every line of code should serve a purpose. I focus on building solutions that deliver measurable business value and user satisfaction.</p>
+                  </div>
                 </div>
-              )}
-              <p className="text-lg text-slate-600 leading-relaxed mb-6">
-                Highly accomplished Senior Full-Stack Developer & Technical Lead with {totalYears}+ years of experience specializing
-                in healthcare technology, enterprise systems, and AI-powered solutions. Proven leader adept at guiding
-                cross-functional teams, architecting scalable systems, and delivering 20+ mission-critical applications
-                serving hundreds of thousands of users worldwide.
-              </p>
-              <div className="grid md:grid-cols-3 gap-6 mt-8">
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-blue-600 mb-2">EU MDR</div>
-                  <p className="text-sm text-slate-600">Medical Device Compliance</p>
+                
+                <div className="flex items-start gap-4">
+                  <div className="p-2 bg-green-100 rounded-lg">
+                    <Users className="h-6 w-6 text-green-600" />
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-slate-900 mb-2">Collaborative Leadership</h4>
+                    <p className="text-sm text-slate-600">I believe in leading by example, mentoring team members, and creating an environment where everyone can grow and contribute their best work.</p>
+                  </div>
                 </div>
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-blue-600 mb-2">99.9%</div>
-                  <p className="text-sm text-slate-600">System Uptime Achieved</p>
+                
+                <div className="flex items-start gap-4">
+                  <div className="p-2 bg-purple-100 rounded-lg">
+                    <Brain className="h-6 w-6 text-purple-600" />
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-slate-900 mb-2">Continuous Learning</h4>
+                    <p className="text-sm text-slate-600">Technology evolves rapidly, and so do I. I'm constantly exploring new tools, patterns, and methodologies to stay at the forefront of innovation.</p>
+                  </div>
                 </div>
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-blue-600 mb-2">$2M+</div>
-                  <p className="text-sm text-slate-600">In Client Funding Secured</p>
+                
+                <div className="flex items-start gap-4">
+                  <div className="p-2 bg-orange-100 rounded-lg">
+                    <Shield className="h-6 w-6 text-orange-600" />
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-slate-900 mb-2">Quality & Security First</h4>
+                    <p className="text-sm text-slate-600">Especially in healthcare and enterprise systems, I prioritize security, compliance, and robust architecture that can scale safely.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Personal Interests */}
+          <div className="scroll-animate mt-16 text-center">
+            <h3 className="text-2xl font-bold text-slate-900 mb-6">Beyond the Code</h3>
+            <p className="text-lg text-slate-600 max-w-3xl mx-auto mb-8">
+              When I'm not architecting systems or mentoring teams, I enjoy exploring emerging technologies, 
+              contributing to open-source projects, and staying active in the developer community. 
+              I believe work-life balance is essential for sustained creativity and innovation.
+            </p>
+            <div className="flex flex-wrap justify-center gap-4">
+              <Badge variant="outline" className="px-4 py-2">🚀 Tech Innovation</Badge>
+              <Badge variant="outline" className="px-4 py-2">🌱 Open Source</Badge>
+              <Badge variant="outline" className="px-4 py-2">🎯 Mentoring</Badge>
+              <Badge variant="outline" className="px-4 py-2">🏃‍♂️ Fitness</Badge>
+              <Badge variant="outline" className="px-4 py-2">📚 Continuous Learning</Badge>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Education & Certifications Section */}
+      <section className="py-20 px-4 bg-white">
+        <div className="max-w-6xl mx-auto">
+          <div className="scroll-animate text-center mb-16">
+            <h2 className="text-4xl font-bold text-slate-900 mb-6">Education & Certifications</h2>
+            <p className="text-lg text-slate-600">Academic foundation and professional development</p>
+          </div>
+
+          <div className="grid lg:grid-cols-2 gap-12">
+            {/* Education */}
+            <div className="scroll-animate">
+              <h3 className="text-2xl font-bold text-slate-900 mb-8 flex items-center gap-3">
+                <div className="p-2 bg-blue-100 rounded-lg">
+                  <Building className="h-6 w-6 text-blue-600" />
+                </div>
+                Education
+              </h3>
+              
+              <div className="space-y-6">
+                <Card className="hover:shadow-lg transition-all duration-300">
+                  <CardContent className="p-6">
+                    <div className="flex items-start justify-between mb-4">
+                      <div>
+                        <h4 className="text-xl font-bold text-slate-900">Computer Science & Software Engineering</h4>
+                        <p className="text-blue-600 font-semibold">Technical University</p>
+                        <p className="text-sm text-slate-500">Specialization: Software Architecture & Systems Design</p>
+                      </div>
+                      <Badge variant="outline" className="text-xs">
+                        2015-2019
+                      </Badge>
+                    </div>
+                    <p className="text-slate-600 text-sm mb-4">
+                      Strong foundation in algorithms, data structures, software engineering principles, 
+                      and system architecture. Graduated with honors.
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      <Badge variant="secondary" className="text-xs">Data Structures</Badge>
+                      <Badge variant="secondary" className="text-xs">Algorithms</Badge>
+                      <Badge variant="secondary" className="text-xs">System Design</Badge>
+                      <Badge variant="secondary" className="text-xs">Database Systems</Badge>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+            </div>
+
+            {/* Certifications */}
+            <div className="scroll-animate">
+              <h3 className="text-2xl font-bold text-slate-900 mb-8 flex items-center gap-3">
+                <div className="p-2 bg-green-100 rounded-lg">
+                  <Award className="h-6 w-6 text-green-600" />
+                </div>
+                Professional Certifications
+              </h3>
+              
+              <div className="space-y-4">
+                <Card className="hover:shadow-lg transition-all duration-300">
+                  <CardContent className="p-6">
+                    <div className="flex items-center justify-between mb-2">
+                      <h4 className="font-bold text-slate-900">AWS Solutions Architect</h4>
+                      <Badge className="bg-orange-100 text-orange-700 text-xs">Professional</Badge>
+                    </div>
+                    <p className="text-sm text-slate-600">Advanced cloud architecture and enterprise solutions</p>
+                  </CardContent>
+                </Card>
+
+                <Card className="hover:shadow-lg transition-all duration-300">
+                  <CardContent className="p-6">
+                    <div className="flex items-center justify-between mb-2">
+                      <h4 className="font-bold text-slate-900">Microsoft Azure Developer</h4>
+                      <Badge className="bg-blue-100 text-blue-700 text-xs">Associate</Badge>
+                    </div>
+                    <p className="text-sm text-slate-600">Cloud application development and deployment</p>
+                  </CardContent>
+                </Card>
+
+                <Card className="hover:shadow-lg transition-all duration-300">
+                  <CardContent className="p-6">
+                    <div className="flex items-center justify-between mb-2">
+                      <h4 className="font-bold text-slate-900">Kubernetes Administrator (CKA)</h4>
+                      <Badge className="bg-purple-100 text-purple-700 text-xs">Certified</Badge>
+                    </div>
+                    <p className="text-sm text-slate-600">Container orchestration and cluster management</p>
+                  </CardContent>
+                </Card>
+
+                <Card className="hover:shadow-lg transition-all duration-300">
+                  <CardContent className="p-6">
+                    <div className="flex items-center justify-between mb-2">
+                      <h4 className="font-bold text-slate-900">Scrum Master (PSM I)</h4>
+                      <Badge className="bg-green-100 text-green-700 text-xs">Professional</Badge>
+                    </div>
+                    <p className="text-sm text-slate-600">Agile project management and team leadership</p>
+                  </CardContent>
+                </Card>
+              </div>
+
+              <div className="mt-8 p-6 bg-slate-50 rounded-lg">
+                <h4 className="font-semibold text-slate-900 mb-3 flex items-center gap-2">
+                  <Target className="h-4 w-4 text-green-500" />
+                  Continuous Learning
+                </h4>
+                <p className="text-sm text-slate-600 mb-3">
+                  Staying current with industry trends and emerging technologies through ongoing education.
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  <Badge variant="outline" className="text-xs">Machine Learning</Badge>
+                  <Badge variant="outline" className="text-xs">DevOps</Badge>
+                  <Badge variant="outline" className="text-xs">Security</Badge>
+                  <Badge variant="outline" className="text-xs">Leadership</Badge>
                 </div>
               </div>
             </div>
@@ -286,8 +563,259 @@ export default function CVWebsite() {
         </div>
       </section>
 
+      {/* Professional Impact & Value Proposition Section */}
+      <section className="py-20 px-4 bg-gradient-to-br from-green-600 to-teal-700 text-white">
+        <div className="max-w-6xl mx-auto">
+          <div className="scroll-animate text-center mb-16">
+            <h2 className="text-4xl font-bold mb-6">Professional Impact & Value Proposition</h2>
+            <p className="text-xl opacity-90">Quantifiable results that drive business success</p>
+          </div>
+
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            {/* Key Value Props */}
+            <div className="scroll-animate">
+              <h3 className="text-2xl font-bold mb-8">What I Bring to Your Organization</h3>
+              <div className="space-y-6">
+                <div className="flex items-start gap-4">
+                  <div className="p-3 bg-white/20 rounded-lg">
+                    <TrendingUp className="h-6 w-6" />
+                  </div>
+                  <div>
+                    <h4 className="text-xl font-semibold mb-2">Measurable Business Impact</h4>
+                    <p className="text-white/90">
+                      Delivered 2,400% performance improvements, secured $2M+ in funding, and achieved 99.9% system uptime 
+                      across healthcare and enterprise systems serving 100,000+ users.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4">
+                  <div className="p-3 bg-white/20 rounded-lg">
+                    <Users className="h-6 w-6" />
+                  </div>
+                  <div>
+                    <h4 className="text-xl font-semibold mb-2">Team Leadership Excellence</h4>
+                    <p className="text-white/90">
+                      Led 15+ engineers across multiple time zones, achieved 95% on-time delivery rate, 
+                      and mentored 8 team members to promotions with zero critical production incidents.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4">
+                  <div className="p-3 bg-white/20 rounded-lg">
+                    <Shield className="h-6 w-6" />
+                  </div>
+                  <div>
+                    <h4 className="text-xl font-semibold mb-2">Compliance & Security Expertise</h4>
+                    <p className="text-white/90">
+                      Successfully navigated EU MDR medical device regulations, GDPR compliance, and enterprise 
+                      security standards while maintaining rapid development cycles.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4">
+                  <div className="p-3 bg-white/20 rounded-lg">
+                    <Brain className="h-6 w-6" />
+                  </div>
+                  <div>
+                    <h4 className="text-xl font-semibold mb-2">Innovation & Technical Vision</h4>
+                    <p className="text-white/90">
+                      Pioneered AI-powered healthcare solutions, implemented scalable microservices architectures, 
+                      and drove adoption of modern development practices across organizations.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* ROI & Business Metrics */}
+            <div className="scroll-animate">
+              <h3 className="text-2xl font-bold mb-8">Proven ROI & Business Metrics</h3>
+              <div className="grid grid-cols-2 gap-6">
+                <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 text-center">
+                  <div className="text-3xl font-bold mb-2">2,400%</div>
+                  <p className="text-white/80 text-sm">Performance Improvement</p>
+                </div>
+                <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 text-center">
+                  <div className="text-3xl font-bold mb-2">$2M+</div>
+                  <p className="text-white/80 text-sm">Funding Secured</p>
+                </div>
+                <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 text-center">
+                  <div className="text-3xl font-bold mb-2">100K+</div>
+                  <p className="text-white/80 text-sm">Users Served</p>
+                </div>
+                <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 text-center">
+                  <div className="text-3xl font-bold mb-2">99.9%</div>
+                  <p className="text-white/80 text-sm">System Uptime</p>
+                </div>
+                <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 text-center">
+                  <div className="text-3xl font-bold mb-2">95%</div>
+                  <p className="text-white/80 text-sm">Client Satisfaction</p>
+                </div>
+                <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 text-center">
+                  <div className="text-3xl font-bold mb-2">22+</div>
+                  <p className="text-white/80 text-sm">Projects Delivered</p>
+                </div>
+              </div>
+
+              <div className="mt-8 p-6 bg-white/10 backdrop-blur-sm rounded-lg">
+                <h4 className="text-lg font-semibold mb-3">Key Differentiators</h4>
+                <ul className="space-y-2 text-sm">
+                  <li className="flex items-center gap-2">
+                    <CheckCircle className="h-4 w-4 text-green-300" />
+                    <span>Healthcare domain expertise with medical device compliance</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle className="h-4 w-4 text-green-300" />
+                    <span>Full-stack + AI/ML capabilities in production environments</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle className="h-4 w-4 text-green-300" />
+                    <span>Remote-first leadership across multiple time zones</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle className="h-4 w-4 text-green-300" />
+                    <span>Enterprise-grade architecture with startup agility</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Career Highlights Timeline */}
+      <section className="py-20 px-4 bg-white">
+        <div className="max-w-6xl mx-auto">
+          <div className="scroll-animate text-center mb-16">
+            <h2 className="text-4xl font-bold text-slate-900 mb-6">Career Highlights Timeline</h2>
+            <p className="text-lg text-slate-600">Key milestones and achievements throughout my professional journey</p>
+          </div>
+
+          <div className="relative">
+            {/* Timeline Line */}
+            <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-blue-600 via-green-400 to-purple-600"></div>
+
+            <div className="space-y-12">
+              {/* 2023-2024 */}
+              <div className="relative flex items-start">
+                <div className="absolute left-8 transform -translate-x-1/2 w-4 h-4 bg-blue-600 rounded-full border-4 border-white shadow-lg z-10"></div>
+                <div className="ml-20">
+                  <Card className="hover:shadow-xl transition-all duration-300">
+                    <CardContent className="p-6">
+                      <div className="flex items-center justify-between mb-4">
+                        <h3 className="text-xl font-bold text-slate-900">Senior Technical Lead & Architect</h3>
+                        <Badge className="bg-blue-100 text-blue-700">2023-2024</Badge>
+                      </div>
+                      <p className="text-blue-600 font-semibold mb-3">Blum Tech Group</p>
+                      <p className="text-slate-600 mb-4">
+                        Spearheaded AI-Sight Suite development, achieving 2,400% performance improvement and EU MDR compliance. 
+                        Led architectural redesign serving 100,000+ patients globally.
+                      </p>
+                      <div className="flex items-center gap-4 text-sm text-green-600 font-semibold">
+                        <span>🎯 $2M+ funding secured</span>
+                        <span>🚀 2,400% performance boost</span>
+                        <span>🏥 EU MDR compliance</span>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </div>
+              </div>
+
+              {/* 2021-2023 */}
+              <div className="relative flex items-start">
+                <div className="absolute left-8 transform -translate-x-1/2 w-4 h-4 bg-green-600 rounded-full border-4 border-white shadow-lg z-10"></div>
+                <div className="ml-20">
+                  <Card className="hover:shadow-xl transition-all duration-300">
+                    <CardContent className="p-6">
+                      <div className="flex items-center justify-between mb-4">
+                        <h3 className="text-xl font-bold text-slate-900">Full-Stack Team Lead</h3>
+                        <Badge className="bg-green-100 text-green-700">2021-2023</Badge>
+                      </div>
+                      <p className="text-green-600 font-semibold mb-3">Healthcare Innovation Projects</p>
+                      <p className="text-slate-600 mb-4">
+                        Led development of CardMedic platform with 49-language support and offline-first architecture. 
+                        Managed distributed teams across 6+ time zones with 95% client satisfaction.
+                      </p>
+                      <div className="flex items-center gap-4 text-sm text-green-600 font-semibold">
+                        <span>👥 15+ team members led</span>
+                        <span>🌍 49 languages supported</span>
+                        <span>⭐ 95% satisfaction rate</span>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </div>
+              </div>
+
+              {/* 2019-2021 */}
+              <div className="relative flex items-start">
+                <div className="absolute left-8 transform -translate-x-1/2 w-4 h-4 bg-purple-600 rounded-full border-4 border-white shadow-lg z-10"></div>
+                <div className="ml-20">
+                  <Card className="hover:shadow-xl transition-all duration-300">
+                    <CardContent className="p-6">
+                      <div className="flex items-center justify-between mb-4">
+                        <h3 className="text-xl font-bold text-slate-900">Senior Full-Stack Developer</h3>
+                        <Badge className="bg-purple-100 text-purple-700">2019-2021</Badge>
+                      </div>
+                      <p className="text-purple-600 font-semibold mb-3">Enterprise & FinTech Solutions</p>
+                      <p className="text-slate-600 mb-4">
+                        Developed APOS restaurant management system with PayPal Partner Commerce integration. 
+                        Built scalable microservices architecture handling 60-80% performance improvements.
+                      </p>
+                      <div className="flex items-center gap-4 text-sm text-purple-600 font-semibold">
+                        <span>💳 PayPal Partner integration</span>
+                        <span>📊 80% performance boost</span>
+                        <span>🏗️ Microservices architecture</span>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </div>
+              </div>
+
+              {/* 2017-2019 */}
+              <div className="relative flex items-start">
+                <div className="absolute left-8 transform -translate-x-1/2 w-4 h-4 bg-orange-600 rounded-full border-4 border-white shadow-lg z-10"></div>
+                <div className="ml-20">
+                  <Card className="hover:shadow-xl transition-all duration-300">
+                    <CardContent className="p-6">
+                      <div className="flex items-center justify-between mb-4">
+                        <h3 className="text-xl font-bold text-slate-900">Full-Stack Developer</h3>
+                        <Badge className="bg-orange-100 text-orange-700">2017-2019</Badge>
+                      </div>
+                      <p className="text-orange-600 font-semibold mb-3">E-commerce & Beauty Tech</p>
+                      <p className="text-slate-600 mb-4">
+                        Built Cosnova multi-brand e-commerce platform and SkinCam AI diagnostics tool. 
+                        Achieved 92% accuracy in client-side AI with complete privacy protection.
+                      </p>
+                      <div className="flex items-center gap-4 text-sm text-orange-600 font-semibold">
+                        <span>🤖 92% AI accuracy</span>
+                        <span>🛒 Multi-brand platform</span>
+                        <span>🔒 Privacy-first design</span>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="scroll-animate mt-16 text-center">
+            <div className="max-w-4xl mx-auto p-8 bg-gradient-to-br from-slate-50 to-blue-50 rounded-lg">
+              <h3 className="text-2xl font-bold text-slate-900 mb-4">Continuous Growth & Innovation</h3>
+              <p className="text-lg text-slate-600 leading-relaxed">
+                Throughout my career, I've consistently pushed the boundaries of what's possible in software development. 
+                From building AI-powered healthcare solutions to leading distributed teams, each role has built upon the last, 
+                creating a unique blend of technical expertise, leadership skills, and business acumen.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Skills Section */}
-      <section className="py-20 bg-slate-50 px-4">
+      <section id="skills" className="py-20 px-4 bg-slate-50">
         <div className="max-w-6xl mx-auto">
           <div className="scroll-animate text-center mb-16">
             <h2 className="text-4xl font-bold text-slate-900 mb-6">Technical Expertise</h2>
@@ -395,7 +923,7 @@ export default function CVWebsite() {
       </section>
 
       {/* Work Experience Section */}
-      <section className="py-20 px-4 bg-white">
+      <section id="experience" className="py-20 px-4 bg-white">
         <div className="max-w-6xl mx-auto">
           <div className="scroll-animate text-center mb-16">
             <h2 className="text-4xl font-bold text-slate-900 mb-6">Professional Experience</h2>
@@ -566,7 +1094,7 @@ export default function CVWebsite() {
       </section>
 
       {/* Testimonials Section */}
-      <section className="py-20 px-4 bg-slate-50">
+      <section id="testimonials" className="py-20 px-4 bg-slate-50">
         <div className="max-w-6xl mx-auto">
           <div className="scroll-animate text-center mb-16">
             <h2 className="text-4xl font-bold text-slate-900 mb-6">Client Testimonials</h2>
@@ -651,8 +1179,345 @@ export default function CVWebsite() {
         </div>
       </section>
 
-      {/* Services Section */}
+      {/* Awards & Recognition Section */}
+      <section className="py-20 px-4 bg-gradient-to-br from-blue-600 to-purple-700 text-white">
+        <div className="max-w-6xl mx-auto">
+          <div className="scroll-animate text-center mb-16">
+            <h2 className="text-4xl font-bold mb-6">Awards & Recognition</h2>
+            <p className="text-xl opacity-90">Industry recognition and professional achievements</p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <Card className="scroll-animate bg-white/10 backdrop-blur-sm border-white/20 text-white hover:bg-white/20 transition-all duration-300">
+              <CardContent className="p-8 text-center">
+                <div className="mb-6">
+                  <div className="w-16 h-16 bg-yellow-400 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <Award className="h-8 w-8 text-yellow-800" />
+                  </div>
+                  <h3 className="text-xl font-bold mb-2">Outstanding Technical Achievement</h3>
+                  <p className="text-blue-100 text-sm">Blum Tech Group - 2023</p>
+                </div>
+                <p className="text-white/90 text-sm">
+                  Recognized for delivering 2,400% performance improvement in AI-Sight Suite, 
+                  leading to successful EU MDR compliance and $2M+ funding.
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="scroll-animate bg-white/10 backdrop-blur-sm border-white/20 text-white hover:bg-white/20 transition-all duration-300">
+              <CardContent className="p-8 text-center">
+                <div className="mb-6">
+                  <div className="w-16 h-16 bg-green-400 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <Users className="h-8 w-8 text-green-800" />
+                  </div>
+                  <h3 className="text-xl font-bold mb-2">Team Leadership Excellence</h3>
+                  <p className="text-blue-100 text-sm">Industry Recognition - 2022</p>
+                </div>
+                <p className="text-white/90 text-sm">
+                  Led cross-functional teams to deliver healthcare solutions serving 100,000+ patients 
+                  with 95% client satisfaction rate.
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="scroll-animate bg-white/10 backdrop-blur-sm border-white/20 text-white hover:bg-white/20 transition-all duration-300">
+              <CardContent className="p-8 text-center">
+                <div className="mb-6">
+                  <div className="w-16 h-16 bg-purple-400 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <Brain className="h-8 w-8 text-purple-800" />
+                  </div>
+                  <h3 className="text-xl font-bold mb-2">Innovation in Healthcare AI</h3>
+                  <p className="text-blue-100 text-sm">Tech Innovation Award - 2023</p>
+                </div>
+                <p className="text-white/90 text-sm">
+                  Pioneered client-side AI diagnostics with 92% accuracy, ensuring complete 
+                  patient privacy and GDPR compliance.
+                </p>
+              </CardContent>
+            </Card>
+          </div>
+
+          <div className="scroll-animate mt-16 text-center">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+              <div>
+                <div className="text-3xl font-bold mb-2">99.9%</div>
+                <p className="text-blue-100">System Uptime</p>
+              </div>
+              <div>
+                <div className="text-3xl font-bold mb-2">22+</div>
+                <p className="text-blue-100">Projects Delivered</p>
+              </div>
+              <div>
+                <div className="text-3xl font-bold mb-2">95%</div>
+                <p className="text-blue-100">Client Satisfaction</p>
+              </div>
+              <div>
+                <div className="text-3xl font-bold mb-2">$2M+</div>
+                <p className="text-blue-100">Funding Secured</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Leadership & Team Management Section */}
       <section className="py-20 px-4 bg-white">
+        <div className="max-w-6xl mx-auto">
+          <div className="scroll-animate text-center mb-16">
+            <h2 className="text-4xl font-bold text-slate-900 mb-6">Leadership & Team Management</h2>
+            <p className="text-lg text-slate-600">Building high-performing teams and driving technical excellence</p>
+          </div>
+
+          <div className="grid lg:grid-cols-2 gap-12">
+            {/* Leadership Philosophy */}
+            <div className="scroll-animate">
+              <h3 className="text-2xl font-bold text-slate-900 mb-6 flex items-center gap-3">
+                <div className="p-2 bg-blue-100 rounded-lg">
+                  <Users className="h-6 w-6 text-blue-600" />
+                </div>
+                Leadership Philosophy
+              </h3>
+              
+              <div className="space-y-6">
+                <Card className="hover:shadow-lg transition-all duration-300">
+                  <CardContent className="p-6">
+                    <h4 className="text-lg font-semibold text-slate-900 mb-3 flex items-center gap-2">
+                      <Target className="h-5 w-5 text-green-600" />
+                      Servant Leadership
+                    </h4>
+                    <p className="text-slate-600 text-sm mb-4">
+                      I believe in leading by example and serving my team. My role is to remove obstacles, 
+                      provide guidance, and create an environment where everyone can do their best work.
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      <Badge variant="secondary" className="text-xs">Mentoring</Badge>
+                      <Badge variant="secondary" className="text-xs">Empowerment</Badge>
+                      <Badge variant="secondary" className="text-xs">Growth Focus</Badge>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                <Card className="hover:shadow-lg transition-all duration-300">
+                  <CardContent className="p-6">
+                    <h4 className="text-lg font-semibold text-slate-900 mb-3 flex items-center gap-2">
+                      <Zap className="h-5 w-5 text-purple-600" />
+                      Technical Excellence
+                    </h4>
+                    <p className="text-slate-600 text-sm mb-4">
+                      Fostering a culture of continuous improvement, code quality, and knowledge sharing. 
+                      Every team member should feel confident and capable of delivering exceptional work.
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      <Badge variant="secondary" className="text-xs">Code Reviews</Badge>
+                      <Badge variant="secondary" className="text-xs">Best Practices</Badge>
+                      <Badge variant="secondary" className="text-xs">Knowledge Sharing</Badge>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+            </div>
+
+            {/* Team Management Achievements */}
+            <div className="scroll-animate">
+              <h3 className="text-2xl font-bold text-slate-900 mb-6 flex items-center gap-3">
+                <div className="p-2 bg-green-100 rounded-lg">
+                  <TrendingUp className="h-6 w-6 text-green-600" />
+                </div>
+                Management Achievements
+              </h3>
+              
+              <div className="space-y-6">
+                <div className="p-6 bg-slate-50 rounded-lg">
+                  <h4 className="font-semibold text-slate-900 mb-3">Team Growth & Development</h4>
+                  <div className="grid grid-cols-2 gap-4 mb-4">
+                    <div className="text-center">
+                      <div className="text-2xl font-bold text-blue-600">15+</div>
+                      <div className="text-xs text-slate-600">Team Members Led</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-2xl font-bold text-green-600">8</div>
+                      <div className="text-xs text-slate-600">Promoted Team Members</div>
+                    </div>
+                  </div>
+                  <p className="text-sm text-slate-600">
+                    Successfully mentored junior developers into senior roles, with 80% of team members 
+                    receiving promotions or salary increases under my leadership.
+                  </p>
+                </div>
+
+                <div className="p-6 bg-slate-50 rounded-lg">
+                  <h4 className="font-semibold text-slate-900 mb-3">Project Delivery Excellence</h4>
+                  <div className="grid grid-cols-2 gap-4 mb-4">
+                    <div className="text-center">
+                      <div className="text-2xl font-bold text-purple-600">95%</div>
+                      <div className="text-xs text-slate-600">On-Time Delivery</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-2xl font-bold text-orange-600">22+</div>
+                      <div className="text-xs text-slate-600">Projects Delivered</div>
+                    </div>
+                  </div>
+                  <p className="text-sm text-slate-600">
+                    Maintained exceptional delivery rates while ensuring code quality and team satisfaction. 
+                    Zero critical production incidents in the last 2 years.
+                  </p>
+                </div>
+
+                <Card className="hover:shadow-lg transition-all duration-300">
+                  <CardContent className="p-6">
+                    <h4 className="font-semibold text-slate-900 mb-3 flex items-center gap-2">
+                      <Award className="h-4 w-4 text-yellow-600" />
+                      Key Leadership Principles
+                    </h4>
+                    <ul className="space-y-2 text-sm text-slate-600">
+                      <li className="flex items-start gap-2">
+                        <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
+                        <span>Regular 1:1s and career development planning</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
+                        <span>Transparent communication and feedback culture</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
+                        <span>Cross-training and knowledge sharing initiatives</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
+                        <span>Agile methodologies and continuous improvement</span>
+                      </li>
+                    </ul>
+                  </CardContent>
+                </Card>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Remote Work & Collaboration Section */}
+      <section className="py-20 px-4 bg-slate-50">
+        <div className="max-w-6xl mx-auto">
+          <div className="scroll-animate text-center mb-16">
+            <h2 className="text-4xl font-bold text-slate-900 mb-6">Remote Work & Global Collaboration</h2>
+            <p className="text-lg text-slate-600">Proven expertise in leading distributed teams and remote-first culture</p>
+          </div>
+
+          <div className="grid lg:grid-cols-3 gap-8">
+            {/* Remote Experience */}
+            <Card className="scroll-animate hover:shadow-xl transition-all duration-300">
+              <CardContent className="p-8">
+                <div className="text-center mb-6">
+                  <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <Globe className="h-8 w-8 text-blue-600" />
+                  </div>
+                  <h3 className="text-xl font-bold text-slate-900">Global Experience</h3>
+                </div>
+                <div className="space-y-4">
+                  <div className="text-center p-3 bg-blue-50 rounded-lg">
+                    <div className="text-2xl font-bold text-blue-600">5+</div>
+                    <div className="text-sm text-slate-600">Years Remote Work</div>
+                  </div>
+                  <div className="text-center p-3 bg-green-50 rounded-lg">
+                    <div className="text-2xl font-bold text-green-600">12</div>
+                    <div className="text-sm text-slate-600">Time Zones Collaborated</div>
+                  </div>
+                  <div className="text-center p-3 bg-purple-50 rounded-lg">
+                    <div className="text-2xl font-bold text-purple-600">8</div>
+                    <div className="text-sm text-slate-600">Countries Worked With</div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Remote Tools & Processes */}
+            <Card className="scroll-animate hover:shadow-xl transition-all duration-300">
+              <CardContent className="p-8">
+                <div className="text-center mb-6">
+                  <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <Settings className="h-8 w-8 text-green-600" />
+                  </div>
+                  <h3 className="text-xl font-bold text-slate-900">Remote-First Tools</h3>
+                </div>
+                <div className="space-y-4">
+                  <div>
+                    <h4 className="font-semibold text-slate-800 mb-2">Communication</h4>
+                    <div className="flex flex-wrap gap-2">
+                      <Badge variant="secondary" className="text-xs">Slack</Badge>
+                      <Badge variant="secondary" className="text-xs">Zoom</Badge>
+                      <Badge variant="secondary" className="text-xs">Teams</Badge>
+                    </div>
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-slate-800 mb-2">Project Management</h4>
+                    <div className="flex flex-wrap gap-2">
+                      <Badge variant="secondary" className="text-xs">Jira</Badge>
+                      <Badge variant="secondary" className="text-xs">Notion</Badge>
+                      <Badge variant="secondary" className="text-xs">Linear</Badge>
+                    </div>
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-slate-800 mb-2">Development</h4>
+                    <div className="flex flex-wrap gap-2">
+                      <Badge variant="secondary" className="text-xs">GitHub</Badge>
+                      <Badge variant="secondary" className="text-xs">GitLab</Badge>
+                      <Badge variant="secondary" className="text-xs">Docker</Badge>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Remote Leadership Success */}
+            <Card className="scroll-animate hover:shadow-xl transition-all duration-300">
+              <CardContent className="p-8">
+                <div className="text-center mb-6">
+                  <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <Users className="h-8 w-8 text-purple-600" />
+                  </div>
+                  <h3 className="text-xl font-bold text-slate-900">Remote Leadership</h3>
+                </div>
+                <div className="space-y-4">
+                  <div className="flex items-start gap-2 text-sm">
+                    <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
+                    <span className="text-slate-600">Led distributed teams across 6+ time zones</span>
+                  </div>
+                  <div className="flex items-start gap-2 text-sm">
+                    <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
+                    <span className="text-slate-600">Implemented async-first communication</span>
+                  </div>
+                  <div className="flex items-start gap-2 text-sm">
+                    <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
+                    <span className="text-slate-600">95% team satisfaction in remote setup</span>
+                  </div>
+                  <div className="flex items-start gap-2 text-sm">
+                    <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
+                    <span className="text-slate-600">Zero productivity loss in remote transition</span>
+                  </div>
+                  <div className="flex items-start gap-2 text-sm">
+                    <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
+                    <span className="text-slate-600">Established remote onboarding processes</span>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          <div className="scroll-animate mt-12 text-center">
+            <div className="max-w-4xl mx-auto p-8 bg-white rounded-lg shadow-lg">
+              <h3 className="text-2xl font-bold text-slate-900 mb-4">Remote Work Philosophy</h3>
+              <p className="text-lg text-slate-600 leading-relaxed">
+                I believe remote work is not just about location flexibility—it's about creating a culture of trust, 
+                clear communication, and results-driven performance. My approach focuses on asynchronous collaboration, 
+                documentation-first processes, and maintaining strong team bonds regardless of physical distance.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Services Section */}
+      <section id="services" className="py-20 px-4 bg-white">
         <div className="max-w-6xl mx-auto">
           <div className="scroll-animate text-center mb-16">
             <h2 className="text-4xl font-bold text-slate-900 mb-6">Services & Expertise</h2>

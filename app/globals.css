@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem; /* Account for fixed navigation */
+}
+
 /* Modern Animation System */
 @layer base {
   html {
@@ -354,4 +359,12 @@
 .scroll-animate.animate-fade-in-up {
   opacity: 1;
   transform: translateY(0);
+}
+
+/* Line clamp utility for project descriptions */
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
