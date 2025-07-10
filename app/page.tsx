@@ -6,6 +6,9 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { ProjectModal } from "@/components/project-modal"
 import { getFeaturedProjects, ProjectData } from "@/data/projects"
+import { workExperience, getCurrentPosition, getTotalYearsExperience } from "@/data/experience"
+import { getFeaturedTestimonials, getAverageRating } from "@/data/testimonials"
+import { getFeaturedServices } from "@/data/services"
 import {
   Code2,
   Database,
@@ -24,6 +27,14 @@ import {
   Brain,
   Shield,
   ExternalLink,
+  Calendar,
+  MapPin,
+  Star,
+  Quote,
+  CheckCircle,
+  Clock,
+  Building,
+  Briefcase,
 } from "lucide-react"
 
 // Animated Counter Component
@@ -85,6 +96,11 @@ export default function CVWebsite() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   
   const featuredProjects = getFeaturedProjects()
+  const featuredTestimonials = getFeaturedTestimonials()
+  const featuredServices = getFeaturedServices()
+  const currentPosition = getCurrentPosition()
+  const totalYears = getTotalYearsExperience()
+  const averageRating = getAverageRating()
 
   const handleProjectClick = (project: ProjectData) => {
     setSelectedProject(project)
@@ -168,6 +184,7 @@ export default function CVWebsite() {
             <Button
               size="lg"
               className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 text-lg transition-all duration-300 hover:scale-105 hover:shadow-lg"
+              onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
             >
               View My Portfolio
               <ArrowRight className="ml-2 h-5 w-5" />
@@ -176,9 +193,10 @@ export default function CVWebsite() {
               variant="outline"
               size="lg"
               className="border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white px-8 py-3 text-lg transition-all duration-300 hover:scale-105 bg-transparent"
+              onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
             >
-              Connect on LinkedIn
-              <Linkedin className="ml-2 h-5 w-5" />
+              Get In Touch
+              <Mail className="ml-2 h-5 w-5" />
             </Button>
           </div>
         </div>
@@ -195,15 +213,15 @@ export default function CVWebsite() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             <div className="scroll-animate">
               <div className="text-4xl font-bold text-blue-600 mb-2">
-                <AnimatedCounter end={6} suffix="+" />
+                <AnimatedCounter end={totalYears} suffix="+" />
               </div>
               <p className="text-slate-600">Years Experience</p>
             </div>
             <div className="scroll-animate">
               <div className="text-4xl font-bold text-blue-600 mb-2">
-                <AnimatedCounter end={15} suffix="+" />
+                <AnimatedCounter end={22} suffix="+" />
               </div>
-              <p className="text-slate-600">Applications Built</p>
+              <p className="text-slate-600">Projects Delivered</p>
             </div>
             <div className="scroll-animate">
               <div className="text-4xl font-bold text-blue-600 mb-2">
@@ -215,7 +233,7 @@ export default function CVWebsite() {
               <div className="text-4xl font-bold text-blue-600 mb-2">
                 <AnimatedCounter end={99} suffix=".9%" />
               </div>
-              <p className="text-slate-600">Uptime</p>
+              <p className="text-slate-600">System Uptime</p>
             </div>
           </div>
         </div>
@@ -227,13 +245,33 @@ export default function CVWebsite() {
           <div className="scroll-animate text-center mb-16">
             <h2 className="text-4xl font-bold text-slate-900 mb-6">Professional Summary</h2>
             <div className="max-w-4xl mx-auto">
-              <p className="text-lg text-slate-600 leading-relaxed">
-                Highly accomplished Senior Full-Stack Developer & Technical Lead with 6 years of experience specializing
-                in healthcare technology, enterprise systems, and FinTech solutions. Proven leader adept at guiding
-                cross-functional teams, optimizing complex systems, and delivering 15+ mission-critical applications
-                serving hundreds of thousands of users. Blends deep technical expertise with strong project management,
-                client communication, and agile planning skills.
+              {currentPosition && (
+                <div className="mb-6">
+                  <Badge className="bg-blue-100 text-blue-800 px-4 py-2 text-sm font-medium">
+                    Currently: {currentPosition.position} at {currentPosition.company}
+                  </Badge>
+                </div>
+              )}
+              <p className="text-lg text-slate-600 leading-relaxed mb-6">
+                Highly accomplished Senior Full-Stack Developer & Technical Lead with {totalYears}+ years of experience specializing
+                in healthcare technology, enterprise systems, and AI-powered solutions. Proven leader adept at guiding
+                cross-functional teams, architecting scalable systems, and delivering 20+ mission-critical applications
+                serving hundreds of thousands of users worldwide.
               </p>
+              <div className="grid md:grid-cols-3 gap-6 mt-8">
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-blue-600 mb-2">EU MDR</div>
+                  <p className="text-sm text-slate-600">Medical Device Compliance</p>
+                </div>
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-blue-600 mb-2">99.9%</div>
+                  <p className="text-sm text-slate-600">System Uptime Achieved</p>
+                </div>
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-blue-600 mb-2">$2M+</div>
+                  <p className="text-sm text-slate-600">In Client Funding Secured</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -347,8 +385,109 @@ export default function CVWebsite() {
         </div>
       </section>
 
+      {/* Work Experience Section */}
+      <section className="py-20 px-4 bg-white">
+        <div className="max-w-6xl mx-auto">
+          <div className="scroll-animate text-center mb-16">
+            <h2 className="text-4xl font-bold text-slate-900 mb-6">Professional Experience</h2>
+            <p className="text-lg text-slate-600">{totalYears}+ years of delivering enterprise-grade solutions</p>
+          </div>
+
+          <div className="relative">
+            {/* Timeline Line */}
+            <div className="absolute left-4 md:left-1/2 md:transform md:-translate-x-px top-0 bottom-0 w-0.5 bg-gradient-to-b from-blue-600 via-blue-400 to-blue-200"></div>
+
+            <div className="space-y-12">
+              {workExperience.map((experience, index) => (
+                <div key={experience.id} className={`relative flex items-center ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`}>
+                  {/* Timeline Dot */}
+                  <div className="absolute left-4 md:left-1/2 md:transform md:-translate-x-1/2 w-4 h-4 bg-blue-600 rounded-full border-4 border-white shadow-lg z-10"></div>
+
+                  {/* Content */}
+                  <div className={`scroll-animate ml-12 md:ml-0 md:w-5/12 ${index % 2 === 0 ? '' : 'md:text-right'}`}>
+                    <Card className="hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                      <CardContent className="p-8">
+                        <div className="flex items-start justify-between mb-4">
+                          <div className={index % 2 === 0 ? '' : 'md:text-right'}>
+                            <h3 className="text-2xl font-bold text-slate-900 mb-2">{experience.position}</h3>
+                            <div className="flex items-center gap-2 text-blue-600 font-semibold mb-2">
+                              <Building className="h-4 w-4" />
+                              <span>{experience.company}</span>
+                            </div>
+                            <div className="flex items-center gap-4 text-sm text-slate-500 mb-4">
+                              <div className="flex items-center gap-1">
+                                <Calendar className="h-4 w-4" />
+                                <span>{experience.duration}</span>
+                              </div>
+                              <div className="flex items-center gap-1">
+                                <MapPin className="h-4 w-4" />
+                                <span>{experience.location}</span>
+                              </div>
+                              <Badge variant="outline" className="text-xs">
+                                {experience.type}
+                              </Badge>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <p className="text-slate-600 mb-6 leading-relaxed">{experience.description}</p>
+                        
+                        {/* Key Metrics */}
+                        {experience.keyMetrics && (
+                          <div className="grid grid-cols-2 gap-4 mb-6">
+                            {experience.keyMetrics.slice(0, 2).map((metric, idx) => (
+                              <div key={idx} className="text-center p-3 bg-blue-50 rounded-lg">
+                                <div className="text-lg font-bold text-blue-600">{metric.value}</div>
+                                <div className="text-xs text-slate-600">{metric.metric}</div>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+
+                        {/* Top Achievements */}
+                        <div className="mb-6">
+                          <h4 className="font-semibold text-slate-800 mb-3 flex items-center gap-2">
+                            <Award className="h-4 w-4 text-orange-500" />
+                            Key Achievements
+                          </h4>
+                          <ul className="space-y-2">
+                            {experience.achievements.slice(0, 3).map((achievement, idx) => (
+                              <li key={idx} className="flex items-start gap-2 text-sm">
+                                <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
+                                <span className="text-slate-600">{achievement}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+
+                        {/* Technologies */}
+                        <div>
+                          <h4 className="font-semibold text-slate-800 mb-3">Technologies Used</h4>
+                          <div className="flex flex-wrap gap-2">
+                            {experience.technologies.slice(0, 6).map((tech) => (
+                              <Badge key={tech} variant="secondary" className="text-xs">
+                                {tech}
+                              </Badge>
+                            ))}
+                            {experience.technologies.length > 6 && (
+                              <Badge variant="outline" className="text-xs">
+                                +{experience.technologies.length - 6} more
+                              </Badge>
+                            )}
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Projects Section */}
-      <section className="py-20 px-4">
+      <section id="projects" className="py-20 px-4">
         <div className="max-w-6xl mx-auto">
           <div className="scroll-animate text-center mb-16">
             <h2 className="text-4xl font-bold text-slate-900 mb-6">Key Projects & Achievements</h2>
@@ -417,6 +556,181 @@ export default function CVWebsite() {
         </div>
       </section>
 
+      {/* Testimonials Section */}
+      <section className="py-20 px-4 bg-slate-50">
+        <div className="max-w-6xl mx-auto">
+          <div className="scroll-animate text-center mb-16">
+            <h2 className="text-4xl font-bold text-slate-900 mb-6">Client Testimonials</h2>
+            <div className="flex items-center justify-center gap-2 mb-4">
+              <div className="flex items-center gap-1">
+                {[1, 2, 3, 4, 5].map((star) => (
+                  <Star key={star} className="h-5 w-5 fill-yellow-400 text-yellow-400" />
+                ))}
+              </div>
+              <span className="text-lg font-semibold text-slate-700">{averageRating}/5.0</span>
+              <span className="text-slate-500">({featuredTestimonials.length} reviews)</span>
+            </div>
+            <p className="text-lg text-slate-600">What clients and colleagues say about working with me</p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {featuredTestimonials.map((testimonial, index) => (
+              <Card key={testimonial.id} className="scroll-animate hover:shadow-xl transition-all duration-300 hover:-translate-y-2 relative">
+                <CardContent className="p-8">
+                  <div className="absolute top-6 right-6">
+                    <Quote className="h-6 w-6 text-blue-200" />
+                  </div>
+                  
+                  <div className="flex items-center gap-1 mb-4">
+                    {[1, 2, 3, 4, 5].map((star) => (
+                      <Star key={star} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                    ))}
+                  </div>
+                  
+                  <p className="text-slate-600 leading-relaxed mb-6 italic">"{testimonial.quote}"</p>
+                  
+                  <div className="border-t pt-4">
+                    <div className="flex items-start justify-between">
+                      <div>
+                        <h4 className="font-semibold text-slate-900">{testimonial.name}</h4>
+                        <p className="text-sm text-slate-600">{testimonial.position}</p>
+                        <p className="text-sm font-medium text-blue-600">{testimonial.company}</p>
+                      </div>
+                      {testimonial.verified && (
+                        <div className="flex items-center gap-1 text-green-600">
+                          <CheckCircle className="h-4 w-4" />
+                          <span className="text-xs">Verified</span>
+                        </div>
+                      )}
+                    </div>
+                    
+                    {testimonial.project && (
+                      <div className="mt-3">
+                        <Badge variant="outline" className="text-xs">
+                          {testimonial.project}
+                        </Badge>
+                      </div>
+                    )}
+                    
+                    <div className="flex items-center gap-2 mt-3 text-xs text-slate-400">
+                      <span className="capitalize">{testimonial.relationship}</span>
+                      <span>•</span>
+                      <span>{new Date(testimonial.date).toLocaleDateString('en-US', { 
+                        month: 'short', 
+                        year: 'numeric' 
+                      })}</span>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+
+          {/* Call to Action */}
+          <div className="scroll-animate text-center mt-12">
+            <p className="text-lg text-slate-600 mb-6">
+              Ready to add your testimonial to this collection?
+            </p>
+            <Button 
+              size="lg" 
+              className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 transition-all duration-300 hover:scale-105"
+            >
+              Start Your Project
+              <ArrowRight className="ml-2 h-5 w-5" />
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* Services Section */}
+      <section className="py-20 px-4 bg-white">
+        <div className="max-w-6xl mx-auto">
+          <div className="scroll-animate text-center mb-16">
+            <h2 className="text-4xl font-bold text-slate-900 mb-6">Services & Expertise</h2>
+            <p className="text-lg text-slate-600">Comprehensive technical solutions for your business needs</p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-8">
+            {featuredServices.map((service) => {
+              const IconComponent = service.icon === 'Code2' ? Code2 : 
+                                  service.icon === 'Brain' ? Brain :
+                                  service.icon === 'Cloud' ? Cloud :
+                                  Settings
+              
+              return (
+                <Card key={service.id} className="scroll-animate hover:shadow-xl transition-all duration-300 hover:-translate-y-2 group">
+                  <CardContent className="p-8">
+                    <div className="flex items-start gap-4 mb-6">
+                      <div className="p-3 bg-blue-100 rounded-lg group-hover:bg-blue-200 transition-colors">
+                        <IconComponent className="h-8 w-8 text-blue-600" />
+                      </div>
+                      <div className="flex-1">
+                        <h3 className="text-2xl font-bold text-slate-900 mb-2 group-hover:text-blue-600 transition-colors">
+                          {service.title}
+                        </h3>
+                        <div className="flex items-center gap-2 mb-3">
+                          <Clock className="h-4 w-4 text-slate-400" />
+                          <span className="text-sm text-slate-500">{service.timeframe}</span>
+                          <Badge variant="outline" className="text-xs capitalize">
+                            {service.category}
+                          </Badge>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <p className="text-slate-600 mb-6 leading-relaxed">{service.description}</p>
+                    
+                    <div className="space-y-4">
+                      <div>
+                        <h4 className="font-semibold text-slate-800 mb-3">Key Features</h4>
+                        <ul className="space-y-2">
+                          {service.features.slice(0, 4).map((feature, idx) => (
+                            <li key={idx} className="flex items-start gap-2 text-sm">
+                              <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
+                              <span className="text-slate-600">{feature}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                      
+                      <div>
+                        <h4 className="font-semibold text-slate-800 mb-3">Technologies</h4>
+                        <div className="flex flex-wrap gap-2">
+                          {service.technologies.slice(0, 6).map((tech) => (
+                            <Badge key={tech} variant="secondary" className="text-xs">
+                              {tech}
+                            </Badge>
+                          ))}
+                          {service.technologies.length > 6 && (
+                            <Badge variant="outline" className="text-xs">
+                              +{service.technologies.length - 6} more
+                            </Badge>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              )
+            })}
+          </div>
+
+          <div className="scroll-animate text-center mt-12">
+            <p className="text-lg text-slate-600 mb-6">
+              Need a custom solution or want to discuss your specific requirements?
+            </p>
+            <Button 
+              variant="outline"
+              size="lg" 
+              className="border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white px-8 py-3 transition-all duration-300 hover:scale-105"
+            >
+              Schedule Consultation
+              <Calendar className="ml-2 h-5 w-5" />
+            </Button>
+          </div>
+        </div>
+      </section>
+
       {/* Value Proposition Section */}
       <section className="py-20 bg-gradient-to-r from-blue-600 to-blue-700 text-white px-4">
         <div className="max-w-6xl mx-auto">
@@ -462,7 +776,7 @@ export default function CVWebsite() {
       </section>
 
       {/* Contact Section */}
-      <section className="py-20 px-4 bg-slate-900 text-white">
+      <section id="contact" className="py-20 px-4 bg-slate-900 text-white">
         <div className="max-w-4xl mx-auto text-center">
           <div className="scroll-animate mb-12">
             <h2 className="text-4xl font-bold mb-6">Let's Build Something Amazing Together</h2>

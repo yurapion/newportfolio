@@ -26,6 +26,13 @@ import {
   Target,
   Layers,
   Settings,
+  AlertTriangle,
+  CheckCircle,
+  ArrowRight,
+  BarChart3,
+  Lightbulb,
+  Wrench,
+  Activity,
 } from "lucide-react"
 
 interface ProjectData {
@@ -50,6 +57,27 @@ interface ProjectData {
   caseStudyUrl?: string
   achievements: string[]
   technicalHighlights: string[]
+  technicalChallenges?: {
+    title: string
+    description: string
+    metrics?: {
+      before: string
+      after: string
+      improvement: string
+    }
+  }[]
+  solutions?: {
+    title: string
+    description: string
+    implementation: string
+    result: string
+  }[]
+  performanceMetrics?: {
+    metric: string
+    before: string
+    after: string
+    improvement: string
+  }[]
   architecture: {
     frontend?: string[]
     backend?: string[]
@@ -217,6 +245,142 @@ export function ProjectModal({ project, isOpen, onOpenChange }: ProjectModalProp
               </ul>
             </CardContent>
           </Card>
+
+          {/* Technical Challenges */}
+          {project.technicalChallenges && project.technicalChallenges.length > 0 && (
+            <div className="space-y-4">
+              <h3 className="text-xl font-semibold flex items-center gap-2">
+                <AlertTriangle className="h-5 w-5 text-amber-600" />
+                Technical Challenges
+              </h3>
+              <div className="space-y-4">
+                {project.technicalChallenges.map((challenge, index) => (
+                  <Card key={index} className="p-6 border-l-4 border-l-amber-500 hover:shadow-lg transition-shadow">
+                    <CardContent className="p-0">
+                      <h4 className="font-semibold text-lg text-slate-800 mb-3">
+                        {challenge.title}
+                      </h4>
+                      <p className="text-slate-600 mb-4 leading-relaxed">
+                        {challenge.description}
+                      </p>
+                      {challenge.metrics && (
+                        <div className="bg-gradient-to-r from-amber-50 to-orange-50 p-4 rounded-lg border border-amber-200">
+                          <h5 className="font-medium text-amber-800 mb-3 flex items-center gap-2">
+                            <BarChart3 className="h-4 w-4" />
+                            Performance Impact
+                          </h5>
+                          <div className="grid grid-cols-3 gap-4 text-sm">
+                            <div className="text-center p-3 bg-white rounded-lg border border-red-200">
+                              <div className="text-red-600 font-medium mb-1">Before</div>
+                              <div className="text-slate-700 font-semibold">{challenge.metrics.before}</div>
+                            </div>
+                            <div className="text-center p-3 bg-white rounded-lg border border-green-200">
+                              <div className="text-green-600 font-medium mb-1">After</div>
+                              <div className="text-slate-700 font-semibold">{challenge.metrics.after}</div>
+                            </div>
+                            <div className="text-center p-3 bg-white rounded-lg border border-blue-200">
+                              <div className="text-blue-600 font-medium mb-1">Improvement</div>
+                              <div className="text-blue-700 font-bold">{challenge.metrics.improvement}</div>
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Technical Solutions */}
+          {project.solutions && project.solutions.length > 0 && (
+            <div className="space-y-4">
+              <h3 className="text-xl font-semibold flex items-center gap-2">
+                <Lightbulb className="h-5 w-5 text-green-600" />
+                Technical Solutions
+              </h3>
+              <div className="space-y-4">
+                {project.solutions.map((solution, index) => (
+                  <Card key={index} className="p-6 border-l-4 border-l-green-500 hover:shadow-lg transition-shadow">
+                    <CardContent className="p-0">
+                      <h4 className="font-semibold text-lg text-slate-800 mb-3 flex items-center gap-2">
+                        <CheckCircle className="h-5 w-5 text-green-600" />
+                        {solution.title}
+                      </h4>
+                      <div className="space-y-4">
+                        <div className="bg-slate-50 p-4 rounded-lg">
+                          <h5 className="font-medium text-slate-700 mb-2">Problem Analysis</h5>
+                          <p className="text-slate-600 leading-relaxed">{solution.description}</p>
+                        </div>
+                        
+                        <div className="flex items-center justify-center my-4">
+                          <div className="flex items-center gap-2 bg-gradient-to-r from-blue-50 to-green-50 px-4 py-2 rounded-full border">
+                            <span className="text-sm text-slate-600">Solution</span>
+                            <ArrowRight className="h-4 w-4 text-blue-600" />
+                          </div>
+                        </div>
+                        
+                        <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
+                          <h5 className="font-medium text-blue-800 mb-2 flex items-center gap-2">
+                            <Wrench className="h-4 w-4" />
+                            Implementation
+                          </h5>
+                          <p className="text-blue-700 leading-relaxed">{solution.implementation}</p>
+                        </div>
+                        
+                        <div className="bg-gradient-to-r from-green-50 to-emerald-50 p-4 rounded-lg border border-green-200">
+                          <h5 className="font-medium text-green-800 mb-2 flex items-center gap-2">
+                            <Activity className="h-4 w-4" />
+                            Result & Impact
+                          </h5>
+                          <p className="text-green-700 font-medium">{solution.result}</p>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Performance Metrics */}
+          {project.performanceMetrics && project.performanceMetrics.length > 0 && (
+            <div className="space-y-4">
+              <h3 className="text-xl font-semibold flex items-center gap-2">
+                <BarChart3 className="h-5 w-5 text-purple-600" />
+                Performance Metrics
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {project.performanceMetrics.map((metric, index) => (
+                  <Card key={index} className="p-6 relative overflow-hidden hover:shadow-lg transition-all duration-300 group">
+                    <CardContent className="p-0">
+                      <div className="absolute top-0 right-0 w-16 h-16 bg-gradient-to-bl from-purple-100 to-transparent rounded-full -mr-8 -mt-8 group-hover:scale-110 transition-transform"></div>
+                      <h4 className="font-semibold text-slate-800 mb-4 flex items-center gap-2">
+                        <Activity className="h-4 w-4 text-purple-600" />
+                        {metric.metric}
+                      </h4>
+                      <div className="space-y-3">
+                        <div className="flex justify-between items-center p-2 bg-red-50 rounded-lg">
+                          <span className="text-sm font-medium text-red-700">Before</span>
+                          <span className="font-semibold text-red-600">{metric.before}</span>
+                        </div>
+                        <div className="flex justify-between items-center p-2 bg-green-50 rounded-lg">
+                          <span className="text-sm font-medium text-green-700">After</span>
+                          <span className="font-semibold text-green-600">{metric.after}</span>
+                        </div>
+                        <div className="border-t-2 border-purple-200 pt-3">
+                          <div className="flex justify-between items-center p-3 bg-gradient-to-r from-purple-50 to-blue-50 rounded-lg">
+                            <span className="text-sm font-medium text-purple-700">Improvement</span>
+                            <span className="font-bold text-purple-600 text-xl">{metric.improvement}</span>
+                          </div>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </div>
+          )}
 
           {/* Architecture */}
           <Card>
