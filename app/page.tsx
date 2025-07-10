@@ -222,6 +222,30 @@ export default function CVWebsite() {
     mobile: ["Flutter", "iOS", "Android", "Cross-platform", "BLoC Pattern", "Push Notifications"],
     cloud: ["AWS", "Azure", "Terraform", "Docker", "ECS", "Lambda", "S3", "Container Orchestration"],
     devops: ["CI/CD", "GitHub Actions", "Bitbucket Pipelines", "SonarQube", "Automated Testing", "99.9% Uptime"],
+    web3: [
+      "Solidity",
+      "Ethereum",
+      "Web3.js",
+      "Smart Contracts",
+      "DeFi",
+      "NFTs",
+      "MetaMask",
+      "Hardhat",
+      "IPFS",
+      "Blockchain Architecture",
+    ],
+    ai: [
+      "Agentic AI",
+      "LangChain",
+      "OpenAI GPT-4",
+      "Claude API",
+      "TensorFlow",
+      "PyTorch",
+      "Scikit-learn",
+      "AutoGen",
+      "ML Model Deployment",
+      "AI Tool Integration",
+    ],
     leadership: [
       "Technical Leadership",
       "Project Management",
@@ -278,7 +302,7 @@ export default function CVWebsite() {
             <p className="text-xl md:text-2xl text-slate-600 mb-8 leading-relaxed">
               Building Scalable Solutions, Leading High-Performing Teams,
               <br className="hidden md:block" />
-              Driving Innovation in Healthcare, Enterprise & FinTech
+              Pioneering Web3, AI & Healthcare Innovation
             </p>
           </div>
           <div className="animate-fade-in-up animation-delay-600 flex flex-col sm:flex-row gap-4 justify-center">
@@ -302,6 +326,15 @@ export default function CVWebsite() {
             <Button
               variant="outline"
               size="lg"
+              className="border-green-600 text-green-600 hover:bg-green-600 hover:text-white px-8 py-3 text-lg transition-all duration-300 hover:scale-105 bg-transparent"
+              onClick={() => window.location.href = '/visualizations'}
+            >
+              Data Visualizations
+              <TrendingUp className="ml-2 h-5 w-5" />
+            </Button>
+            <Button
+              variant="outline"
+              size="lg"
               className="border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white px-8 py-3 text-lg transition-all duration-300 hover:scale-105 bg-transparent"
               onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
             >
@@ -320,7 +353,7 @@ export default function CVWebsite() {
       {/* Stats Section */}
       <section className="py-16 bg-white/50 backdrop-blur-sm">
         <div className="max-w-6xl mx-auto px-4">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+          <div className="grid grid-cols-2 md:grid-cols-6 gap-8 text-center">
             <div className="scroll-animate">
               <div className="text-4xl font-bold text-blue-600 mb-2">
                 <AnimatedCounter end={totalYears} suffix="+" />
@@ -344,6 +377,18 @@ export default function CVWebsite() {
                 <AnimatedCounter end={99} suffix=".9%" />
               </div>
               <p className="text-slate-600">System Uptime</p>
+            </div>
+            <div className="scroll-animate">
+              <div className="text-4xl font-bold text-purple-600 mb-2">
+                <AnimatedCounter end={5} suffix="+" />
+              </div>
+              <p className="text-slate-600">Hackathon Wins</p>
+            </div>
+            <div className="scroll-animate">
+              <div className="text-4xl font-bold text-indigo-600 mb-2">
+                <AnimatedCounter end={10} suffix="+" />
+              </div>
+              <p className="text-slate-600">MVPs Built</p>
             </div>
           </div>
         </div>
@@ -370,7 +415,8 @@ export default function CVWebsite() {
                 <p>
                   What drives me most is working on meaningful projects—especially in healthcare where technology can literally 
                   save lives. From building AI-powered medical imaging platforms that help diagnose diabetic retinopathy to 
-                  creating communication tools that serve 100,000+ patients, I'm motivated by impact.
+                  creating communication tools that serve 100,000+ patients, I'm motivated by impact. My expertise extends to 
+                  creating compelling data visualizations using D3.js and modern charting libraries to tell stories with data.
                 </p>
                 <p>
                   I believe the best technology solutions come from understanding both the technical complexities and human needs. 
@@ -814,6 +860,273 @@ export default function CVWebsite() {
         </div>
       </section>
 
+      {/* Web3 & Blockchain Expertise Section */}
+      <section id="web3" className="py-20 px-4 bg-gradient-to-br from-purple-600 to-indigo-700 text-white">
+        <div className="max-w-6xl mx-auto">
+          <div className="scroll-animate text-center mb-16">
+            <h2 className="text-4xl font-bold mb-6">Web3 & Blockchain Expertise</h2>
+            <p className="text-xl opacity-90">Building the decentralized future with cutting-edge blockchain technology</p>
+          </div>
+
+          <div className="grid lg:grid-cols-2 gap-12">
+            {/* Web3 Experience */}
+            <div className="scroll-animate">
+              <h3 className="text-2xl font-bold mb-8 flex items-center gap-3">
+                <div className="p-2 bg-white/20 rounded-lg">
+                  <Code2 className="h-6 w-6" />
+                </div>
+                Decentralized Applications
+              </h3>
+              
+              <div className="space-y-6">
+                <Card className="bg-white/10 backdrop-blur-sm border-white/20 text-white hover:bg-white/20 transition-all duration-300">
+                  <CardContent className="p-6">
+                    <h4 className="text-lg font-semibold mb-3 flex items-center gap-2">
+                      <Brain className="h-5 w-5 text-green-300" />
+                      Smart Contract Development
+                    </h4>
+                    <p className="text-white/90 text-sm mb-4">
+                      Experienced in building secure and efficient smart contracts for various blockchain platforms. 
+                      Focus on gas optimization and security best practices.
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      <Badge variant="secondary" className="text-xs bg-white/20 text-white">Solidity</Badge>
+                      <Badge variant="secondary" className="text-xs bg-white/20 text-white">Ethereum</Badge>
+                      <Badge variant="secondary" className="text-xs bg-white/20 text-white">Web3.js</Badge>
+                      <Badge variant="secondary" className="text-xs bg-white/20 text-white">Hardhat</Badge>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                <Card className="bg-white/10 backdrop-blur-sm border-white/20 text-white hover:bg-white/20 transition-all duration-300">
+                  <CardContent className="p-6">
+                    <h4 className="text-lg font-semibold mb-3 flex items-center gap-2">
+                      <Globe className="h-5 w-5 text-blue-300" />
+                      DeFi & NFT Platforms
+                    </h4>
+                    <p className="text-white/90 text-sm mb-4">
+                      Built decentralized finance applications and NFT marketplaces with focus on user experience 
+                      and security. Integration with multiple wallet providers and blockchain networks.
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      <Badge variant="secondary" className="text-xs bg-white/20 text-white">DeFi</Badge>
+                      <Badge variant="secondary" className="text-xs bg-white/20 text-white">NFTs</Badge>
+                      <Badge variant="secondary" className="text-xs bg-white/20 text-white">MetaMask</Badge>
+                      <Badge variant="secondary" className="text-xs bg-white/20 text-white">IPFS</Badge>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+            </div>
+
+            {/* Blockchain Achievements */}
+            <div className="scroll-animate">
+              <h3 className="text-2xl font-bold mb-8 flex items-center gap-3">
+                <div className="p-2 bg-white/20 rounded-lg">
+                  <Award className="h-6 w-6" />
+                </div>
+                Blockchain Achievements
+              </h3>
+              
+              <div className="space-y-6">
+                <div className="p-6 bg-white/10 backdrop-blur-sm rounded-lg">
+                  <h4 className="font-semibold mb-3">Hackathon Victories</h4>
+                  <div className="grid grid-cols-2 gap-4 mb-4">
+                    <div className="text-center">
+                      <div className="text-2xl font-bold text-yellow-300">Multiple</div>
+                      <div className="text-xs text-white/80">Hackathon Wins</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-2xl font-bold text-green-300">Invited</div>
+                      <div className="text-xs text-white/80">Hackerhouses</div>
+                    </div>
+                  </div>
+                  <p className="text-sm text-white/90">
+                    Consistent performer in blockchain hackathons, recognized for innovative solutions and 
+                    technical excellence. Invited to exclusive hackerhouses for collaborative building.
+                  </p>
+                </div>
+
+                <div className="p-6 bg-white/10 backdrop-blur-sm rounded-lg">
+                  <h4 className="font-semibold mb-3">MVP Development</h4>
+                  <div className="grid grid-cols-2 gap-4 mb-4">
+                    <div className="text-center">
+                      <div className="text-2xl font-bold text-purple-300">10+</div>
+                      <div className="text-xs text-white/80">MVPs Built</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-2xl font-bold text-orange-300">Rapid</div>
+                      <div className="text-xs text-white/80">Prototyping</div>
+                    </div>
+                  </div>
+                  <p className="text-sm text-white/90">
+                    Experienced in rapid MVP development for blockchain startups. From concept to 
+                    functional prototype in record time, focusing on core value propositions.
+                  </p>
+                </div>
+
+                <Card className="bg-white/10 backdrop-blur-sm border-white/20 text-white hover:bg-white/20 transition-all duration-300">
+                  <CardContent className="p-6">
+                    <h4 className="font-semibold mb-3 flex items-center gap-2">
+                      <Target className="h-4 w-4 text-orange-300" />
+                      Current Learning Focus
+                    </h4>
+                    <ul className="space-y-2 text-sm text-white/90">
+                      <li className="flex items-start gap-2">
+                        <CheckCircle className="h-4 w-4 text-green-300 mt-0.5 flex-shrink-0" />
+                        <span>Advanced blockchain consensus mechanisms</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <CheckCircle className="h-4 w-4 text-green-300 mt-0.5 flex-shrink-0" />
+                        <span>Layer 2 scaling solutions and rollups</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <CheckCircle className="h-4 w-4 text-green-300 mt-0.5 flex-shrink-0" />
+                        <span>Cross-chain interoperability protocols</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <CheckCircle className="h-4 w-4 text-green-300 mt-0.5 flex-shrink-0" />
+                        <span>Zero-knowledge proofs and privacy</span>
+                      </li>
+                    </ul>
+                  </CardContent>
+                </Card>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* AI & Machine Learning Expertise Section */}
+      <section id="ai" className="py-20 px-4 bg-white">
+        <div className="max-w-6xl mx-auto">
+          <div className="scroll-animate text-center mb-16">
+            <h2 className="text-4xl font-bold text-slate-900 mb-6">AI & Machine Learning Expertise</h2>
+            <p className="text-lg text-slate-600">Pioneering intelligent solutions with cutting-edge AI technologies</p>
+          </div>
+
+          <div className="grid lg:grid-cols-3 gap-8">
+            {/* Agentic AI */}
+            <div className="scroll-animate">
+              <Card className="hover:shadow-xl transition-all duration-300 h-full">
+                <CardContent className="p-8">
+                  <div className="text-center mb-6">
+                    <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <Brain className="h-8 w-8 text-white" />
+                    </div>
+                    <h3 className="text-xl font-bold text-slate-900">Agentic AI Systems</h3>
+                  </div>
+                  <div className="space-y-4">
+                    <p className="text-sm text-slate-600">
+                      Specialized in building autonomous AI agents that can reason, plan, and execute complex tasks 
+                      with minimal human intervention.
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      <Badge variant="secondary" className="text-xs">LangChain</Badge>
+                      <Badge variant="secondary" className="text-xs">AutoGen</Badge>
+                      <Badge variant="secondary" className="text-xs">OpenAI GPT-4</Badge>
+                      <Badge variant="secondary" className="text-xs">Anthropic Claude</Badge>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* AI Tools & Frameworks */}
+            <div className="scroll-animate">
+              <Card className="hover:shadow-xl transition-all duration-300 h-full">
+                <CardContent className="p-8">
+                  <div className="text-center mb-6">
+                    <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-teal-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <Settings className="h-8 w-8 text-white" />
+                    </div>
+                    <h3 className="text-xl font-bold text-slate-900">AI Tool Proficiency</h3>
+                  </div>
+                  <div className="space-y-4">
+                    <p className="text-sm text-slate-600">
+                      Expert in leveraging modern AI tools and frameworks to accelerate development and create 
+                      intelligent applications across various domains.
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      <Badge variant="secondary" className="text-xs">Cursor AI</Badge>
+                      <Badge variant="secondary" className="text-xs">GitHub Copilot</Badge>
+                      <Badge variant="secondary" className="text-xs">Replit AI</Badge>
+                      <Badge variant="secondary" className="text-xs">Claude Dev</Badge>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* Machine Learning */}
+            <div className="scroll-animate">
+              <Card className="hover:shadow-xl transition-all duration-300 h-full">
+                <CardContent className="p-8">
+                  <div className="text-center mb-6">
+                    <div className="w-16 h-16 bg-gradient-to-br from-orange-500 to-red-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <TrendingUp className="h-8 w-8 text-white" />
+                    </div>
+                    <h3 className="text-xl font-bold text-slate-900">ML & Data Science</h3>
+                  </div>
+                  <div className="space-y-4">
+                    <p className="text-sm text-slate-600">
+                      Experience in machine learning model development, training, and deployment for real-world 
+                      applications with focus on practical implementation.
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      <Badge variant="secondary" className="text-xs">Python</Badge>
+                      <Badge variant="secondary" className="text-xs">TensorFlow</Badge>
+                      <Badge variant="secondary" className="text-xs">PyTorch</Badge>
+                      <Badge variant="secondary" className="text-xs">Scikit-learn</Badge>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+
+          {/* AI Project Highlights */}
+          <div className="scroll-animate mt-16">
+            <h3 className="text-2xl font-bold text-slate-900 mb-8 text-center">AI Project Highlights</h3>
+            <div className="grid md:grid-cols-2 gap-8">
+              <Card className="hover:shadow-xl transition-all duration-300">
+                <CardContent className="p-6">
+                  <h4 className="text-lg font-semibold text-slate-900 mb-3 flex items-center gap-2">
+                    <Brain className="h-5 w-5 text-blue-600" />
+                    Autonomous Trading Agents
+                  </h4>
+                  <p className="text-slate-600 text-sm mb-4">
+                    Developed intelligent trading agents using reinforcement learning and real-time market data analysis. 
+                    Achieved 15% improved performance over traditional algorithms.
+                  </p>
+                  <div className="flex items-center gap-4 text-sm text-green-600 font-semibold">
+                    <span>🤖 Autonomous Decision Making</span>
+                    <span>📈 15% Performance Gain</span>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card className="hover:shadow-xl transition-all duration-300">
+                <CardContent className="p-6">
+                  <h4 className="text-lg font-semibold text-slate-900 mb-3 flex items-center gap-2">
+                    <Globe className="h-5 w-5 text-purple-600" />
+                    Multi-Agent Coordination System
+                  </h4>
+                  <p className="text-slate-600 text-sm mb-4">
+                    Built a distributed system where multiple AI agents collaborate to solve complex problems. 
+                    Used in blockchain governance and DeFi protocol optimization.
+                  </p>
+                  <div className="flex items-center gap-4 text-sm text-purple-600 font-semibold">
+                    <span>🔗 Blockchain Integration</span>
+                    <span>⚡ Real-time Coordination</span>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Skills Section */}
       <section id="skills" className="py-20 px-4 bg-slate-50">
         <div className="max-w-6xl mx-auto">
@@ -912,6 +1225,38 @@ export default function CVWebsite() {
                 <div className="flex flex-wrap gap-2">
                   {skills.leadership.map((skill) => (
                     <Badge key={skill} variant="secondary" className="hover:bg-teal-100 transition-colors">
+                      {skill}
+                    </Badge>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="scroll-animate hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+              <CardContent className="p-6">
+                <div className="flex items-center mb-4">
+                  <Globe className="h-8 w-8 text-purple-600 mr-3" />
+                  <h3 className="text-xl font-semibold">Web3 & Blockchain</h3>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {skills.web3.map((skill) => (
+                    <Badge key={skill} variant="secondary" className="hover:bg-purple-100 transition-colors">
+                      {skill}
+                    </Badge>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="scroll-animate hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+              <CardContent className="p-6">
+                <div className="flex items-center mb-4">
+                  <Brain className="h-8 w-8 text-indigo-600 mr-3" />
+                  <h3 className="text-xl font-semibold">AI & Machine Learning</h3>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {skills.ai.map((skill) => (
+                    <Badge key={skill} variant="secondary" className="hover:bg-indigo-100 transition-colors">
                       {skill}
                     </Badge>
                   ))}
