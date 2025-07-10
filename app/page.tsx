@@ -192,6 +192,15 @@ export default function CVWebsite() {
             <Button
               variant="outline"
               size="lg"
+              className="border-purple-600 text-purple-600 hover:bg-purple-600 hover:text-white px-8 py-3 text-lg transition-all duration-300 hover:scale-105 bg-transparent"
+              onClick={() => window.location.href = '/architecture'}
+            >
+              System Architecture
+              <Settings className="ml-2 h-5 w-5" />
+            </Button>
+            <Button
+              variant="outline"
+              size="lg"
               className="border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white px-8 py-3 text-lg transition-all duration-300 hover:scale-105 bg-transparent"
               onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
             >
